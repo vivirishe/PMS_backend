@@ -4,9 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+// Load env variables from .env file
+require('dotenv').config();
+
+// var index = require('./routes/index');
+// var users = require('./routes/users');
+
+var routes = require('./config/routes');
+var mongoose = require('./config/database');
 
 var app = express();
 
