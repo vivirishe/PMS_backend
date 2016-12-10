@@ -9,8 +9,8 @@ var cors = require('cors');
 // Load env variables from .env file
 require('dotenv').config();
 
-// var index = require('./routes/index');
-// var users = require('./routes/users');
+var index = require('./routes/index');
+var users = require('./routes/users');
 
 var routes = require('./config/routes');
 var mongoose = require('./config/database');

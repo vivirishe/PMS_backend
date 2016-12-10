@@ -6,3 +6,5 @@ var categorySchema = new mongoo.Schema({
 });
 
 var Category = mongoose.model('Category', categorySchema);
+
+module.exports = Category
