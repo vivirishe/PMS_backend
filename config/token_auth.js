@@ -15,8 +15,8 @@ var jwt = require('jsonwebtoken');
  function extractPayload(user, options) {
    return {
     _id: user._id,
-    email: user.email,
     name:  user.name,
+    email: user.email,
     use:  'public_api'
    };
  }
