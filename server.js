@@ -13,7 +13,7 @@ require('dotenv').config();
 //var index = require('./routes/index');
 var users = require('./routes/users');
 
-var routes = require('./config/routes');
+// var routes = require('./config/routes');
 var mongoose = require('./config/database');
 
 var app = express();
@@ -32,9 +32,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //Validate Content-Type
 app.use(validateContentType);
-app.user(addFailedAuthHeader);
 
 app.use('/', users);
+app.use(addFailedAuthHeader);
 // app.use('/users', users);
 
 // catch 404 and forward to error handler

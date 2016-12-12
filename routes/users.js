@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var usersController = require('../controllers/users')
-var token = require('../config/token_auth')
+var usersController = require('../controllers/users');
+var token = require('../config/token_auth');
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -16,13 +16,20 @@ router.get('/', function(req, res, next) {
 });
 
 // API Routes, respond with JSON only
+//dont need auth because we are creating an acct
 router.route('/api/users')
   .get(usersController.index)
+  //SIGN UP
   .post(usersController.create);
 
+
 router.route('/api/users/:id')
-  .get(usersController.show)
-  .patch(usersController.update)
-  .delete(usersController.destroy);
+  .get(token.authenticate, usersController.show)
+  .patch(token.authenticate, usersController.update)
+  .delete(token.authenticate, usersController.destroy);
+
+//SIGN IN
+router.route('/api/token')
+  .post(token.create)
 
 module.exports = router;
