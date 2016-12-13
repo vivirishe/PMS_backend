@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 // API Routes, respond with JSON only
 //dont need auth because we are creating an acct
 router.route('/api/users')
-  .get(usersController.index)
+  .get(token.authenticate, usersController.index)
   //SIGN UP
   .post(usersController.create);
 
