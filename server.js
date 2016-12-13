@@ -12,6 +12,7 @@ require('dotenv').config();
 //variables for routes file
 //var index = require('./routes/index');
 var users = require('./routes/users');
+var projects = require('./routes/projects');
 
 // var routes = require('./config/routes');
 var mongoose = require('./config/database');
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Validate Content-Type
 app.use(validateContentType);
 
+app.use('/projects', projects)
 app.use('/', users);
 app.use(addFailedAuthHeader);
 // app.use('/users', users);
