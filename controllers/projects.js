@@ -42,7 +42,6 @@ function update(req, res, next) {
   Project.findById(id, function(err, project) {
     project.name = req.body.name;
     project.description = req.body.description;
-    project.categories = req.body.categories;
     project.users = req.body.users;
     project.tasks = req.body.tasks;
 

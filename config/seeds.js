@@ -3,28 +3,74 @@ require('dotenv').config();
 
 var mongoose = require('./database');
 var User = require('../models/User');
+var Project = require('../models/Project');
 
-var users = [
+// var users = [
+//   {
+//     name: "Arthur",
+//     email: "arthur@arthur.com",
+//     typeOfUser: true
+//   },
+//   {
+//     name: "Andres",
+//     email: "andres@andres.com",
+//     typeOfUser: false
+//   }
+// ]
+
+
+// User.remove({}, function(err) {
+//   if(err) console.log(err);
+//   User.create(users, function(err, savedUsers) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Database seeded with " + savedUsers.length + " users.");
+//       mongoose.connection.close();
+//     }
+//     process.exit();
+//   });
+// });
+
+var projects = [
   {
-    name: "Arthur",
-    email: "arthur@arthur.com",
-    typeOfUser: true
+    name: "ATT",
+    description: "Start project",
+    tasks: [{
+      description: "Send proposal", completed: false
+    },
+    {
+      description: "Kick-of Meeting",
+      completed: false
+    },
+    {
+      description: "Sitesurvey",
+      completed: true
+    }]
   },
   {
-    name: "Andres",
-    email: "andres@andres.com",
-    typeOfUser: false
+    name: "Verizon",
+    description: "Star project",
+    tasks: [{
+      description: "Send proposal", completed: false
+    },
+    {
+      description: "Kick-of Meeting",
+      completed: false
+    },
+    {
+      description: "Sitesurvey",
+      completed: true
+    }]
   }
 ]
-
-
-User.remove({}, function(err) {
+Project.remove({}, function(err) {
   if(err) console.log(err);
-  User.create(users, function(err, savedUsers) {
+  Project.create(projects, function(err, savedProject) {
     if (err) {
       console.log(err);
     } else {
-      console.log("Database seeded with " + savedUsers.length + " users.");
+      console.log("Database seeded with " + savedProject.length + " projects.");
       mongoose.connection.close();
     }
     process.exit();

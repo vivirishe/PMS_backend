@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var taskSchema = new mongoose.Schema({
   description: String,
-  completed: Boolean,
+  completed: {type: Boolean, default: false},
   dueDate: Date,
   image: String,
 });
@@ -11,7 +11,7 @@ var taskSchema = new mongoose.Schema({
 var projectSchema = new mongoose.Schema({
   name: {type: String, required: true},
   description: String,
-  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category'}],
+  // categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category'}],
   users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   tasks: [taskSchema]
 });
