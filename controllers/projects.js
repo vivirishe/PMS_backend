@@ -9,11 +9,22 @@ module.exports = {
 }
 
 function index(req, res, next) {
-  Project.find({}, function(err, projects) {
-    if(err) next(err);
+  // Project.find({}, function(err, projects) {
+  //   if(err) next(err);
+  //
+  //   res.json(projects)
+  // }).select('-__v');
 
-    res.json(projects)
-  }).select('-__v');
+  Project.find({})
+  .exec(function(err, projects) {
+    if(err) next(err);
+    Project.populate(projects, {
+      path: 'tasks.user',
+      model: 'User'
+    }, function(err, projects) {
+      res.json(projects)
+    })
+  });
 }
 
 function create(req, res, next) {
@@ -51,6 +62,26 @@ function update(req, res, next) {
       res.json(updateProject);
     });
   });
+
+  // Project.findById(id)
+  //  .exec(function(err, project) {
+  //    Project.populate(projects, {
+  //      path: 'tasks.user',
+  //      model: 'User'
+  //    }, function(err, projects) {
+  //      project.name = req.body.name;
+  //      project.description = req.body.description;
+  //      project.users = req.body.users;
+  //      project.tasks = req.body.tasks;
+  //
+  //      project.save(function(err, updateProject) {
+  //        if(err) next(err);
+  //
+  //        res.json(updateProject);
+  //      });
+  //    })
+  //
+  // });
 }
 
 function destroy(req, res, next) {

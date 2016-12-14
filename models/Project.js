@@ -5,6 +5,7 @@ var taskSchema = new mongoose.Schema({
   completed: {type: Boolean, default: false},
   dueDate: Date,
   image: String,
+  user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 //embeds tasks & references category and users
