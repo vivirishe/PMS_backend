@@ -40,10 +40,20 @@ function create(req, res, next) {
 function show(req, res, next) {
   var id = req.params.id;
 
-  Project.findById(id, function(err, project) {
+  // Project.findById(id, function(err, project) {
+  //   if(err) next(err);
+  //
+  //   res.json(project);
+  // });
+  Project.findById(id)
+  .exec(function(err, projects) {
     if(err) next(err);
-
-    res.json(project);
+    Project.populate(projects, {
+      path: 'tasks.user',
+      model: 'User'
+    }, function(err, projects) {
+      res.json(projects)
+    })
   });
 }
 
