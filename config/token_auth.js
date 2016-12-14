@@ -17,6 +17,7 @@ var jwt = require('jsonwebtoken');
     _id: user._id,
     name:  user.name,
     email: user.email,
+    typeOfUser: user.typeOfUser,
     use:  'public_api'
    };
  }

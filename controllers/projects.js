@@ -32,7 +32,7 @@ function create(req, res, next) {
 
   project.save(function(err, savedProject) {
     if(err) next(err);
-
+    
     res.json(savedProject);
   });
 }
