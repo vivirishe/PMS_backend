@@ -1,4 +1,5 @@
 var Project = require('../models/Project');
+var User = require('../models/User');
 
 module.exports = {
   index: index,
@@ -32,7 +33,20 @@ function create(req, res, next) {
 
   project.save(function(err, savedProject) {
     if(err) next(err);
-    
+
+    var users = savedProject.tasks.map(function(task) {
+      return task.user.toString();
+    }).filter(function(id, index, self) {
+      return self.indexOf(id) === index;
+    });
+
+    users.forEach(function(userId) {
+      User.findById(userId, function(err, user) {
+        user.projects.push(savedProject._id);
+        user.save();
+      });
+    });
+
     res.json(savedProject);
   });
 }
@@ -63,12 +77,25 @@ function update(req, res, next) {
   Project.findById(id, function(err, project) {
     project.name = req.body.name;
     project.description = req.body.description;
-    project.users = req.body.users;
     project.tasks = req.body.tasks;
 
     project.save(function(err, updateProject) {
       if(err) next(err);
 
+      var users = savedProject.tasks.map(function(task) {
+        return task.user.toString();
+      }).filter(function(id, index, self) {
+        return self.indexOf(id) === index;
+      });
+
+      users.forEach(function(userId) {
+        User.findById(userId, function(err, user) {
+          if(!user.projects.include(updateProject._id)) {
+            user.projects.push(savedProject._id);
+            user.save();
+          }
+        });
+      });
       res.json(updateProject);
     });
   });
