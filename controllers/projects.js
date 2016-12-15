@@ -82,7 +82,7 @@ function update(req, res, next) {
     project.save(function(err, updateProject) {
       if(err) next(err);
 
-      var users = savedProject.tasks.map(function(task) {
+      var users = updateProject.tasks.map(function(task) {
         return task.user.toString();
       }).filter(function(id, index, self) {
         return self.indexOf(id) === index;
@@ -90,8 +90,8 @@ function update(req, res, next) {
 
       users.forEach(function(userId) {
         User.findById(userId, function(err, user) {
-          if(!user.projects.include(updateProject._id)) {
-            user.projects.push(savedProject._id);
+          if(!user.projects.includes(updateProject._id)) {
+            user.projects.push(updateProject._id);
             user.save();
           }
         });
