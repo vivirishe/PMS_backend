@@ -6,7 +6,8 @@ module.exports = {
   create: create,
   show: show,
   update: update,
-  destroy: destroy
+  destroy: destroy,
+  destroyTask: destroyTask
 }
 
 function index(req, res, next) {
@@ -60,13 +61,13 @@ function show(req, res, next) {
   //   res.json(project);
   // });
   Project.findById(id)
-  .exec(function(err, projects) {
+  .exec(function(err, project) {
     if(err) next(err);
-    Project.populate(projects, {
+    Project.populate(project, {
       path: 'tasks.user',
       model: 'User'
-    }, function(err, projects) {
-      res.json(projects)
+    }, function(err, project) {
+      res.json(project)
     })
   });
 }
@@ -129,4 +130,20 @@ function destroy(req, res, next) {
 
     res.json({message: 'Project successfully deleted.'})
   });
+
+}
+
+function destroyTask(req, res, next) {
+  var id = req.params.id;
+  var project_id = req.params.project_id
+  console.log('deleting task?')
+    Project.findByIdAndUpdate(project_id, {
+      $pull: {
+        tasks: {_id: id}
+      }
+    }, function(err) {
+      if(err) next(err);
+
+      res.json({message: 'Task successfully deleted.'})
+    });
 }
